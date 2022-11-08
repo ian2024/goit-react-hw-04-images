@@ -21,21 +21,21 @@ export const App = () => {
       return;
     }
 
-    fetchImages();
-  }, [searchQuery, page]);
+    fetchImages(true);
+    });
 
-  const fetchImages = async () => {
+    const fetchImages = async () => {
     setIsLoading(true);
     try {
       await api.fetchImages(searchQuery, page).then(responce => {
         const resp = responce.hits.map(({ largeImageURL, tags, webformatURL, id }) => {
-          return { largeImageURL, tags, webformatURL, id};
+          return { largeImageURL, tags, webformatURL, id };
         });
 
         setImages(prevImages => [...prevImages, ...resp]);
-              if (resp.length === 0) {
-        return setError(`No results ${searchQuery}`);
-      }
+        if (resp.length === 0) {
+          return setError(`No results ${searchQuery}`);
+        }
       });
     }
     catch (err) {
@@ -44,41 +44,41 @@ export const App = () => {
     } finally { setIsLoading(false) };
   };
 
-  const handleSubmit = searchQuery => {
+    const handleSubmit = searchQuery => {
       setSearchQuery(searchQuery);
       setPage(1);
-    setImages([])
-    setError(null)
+      setImages([])
+      setError(null)
     
-  };
+    };
 
-  const handleLMore = () => {
-    setIsLoading(true);
-    setPage(prevPage => prevPage + 1);
-  };
+    const handleLMore = () => {
+      setIsLoading(true);
+      setPage(prevPage => prevPage + 1);
+    };
 
 
-  const toggleModal = async largeImage => {
-    await setSelectedImage(largeImage);
-    setModal(!showModal);
+    const toggleModal = largeImage => {
+      setSelectedImage(largeImage);
+      setModal(!showModal);
 
-  };
+    };
 
-      return (
+    return (
       <main className="App">
-          <Searchbar onSubmit={handleSubmit} />
-          {error && <p>{error}</p>}
+        <Searchbar onSubmit={handleSubmit} />
+        {error && <p>{error}</p>}
         <ImageGallery images={images} toggleModal={toggleModal} />
         {images.length >= 12 && (
-          <Button onLoadMore={handleLMore} text={isLoading ? 'Loading :|' : 'Load More'}/>
+          <Button onLoadMore={handleLMore} text={isLoading ? 'Loading :|' : 'Load More'} />
         )}
         {showModal && (
           <Modal onClose={toggleModal}>
             <img src={selectedImage} alt="#" />
           </Modal>
-          )}
-          {isLoading && <Loader />}
+        )}
+        {isLoading && <Loader />}
       </main>
     );
-}
+  }
  
