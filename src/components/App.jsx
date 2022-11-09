@@ -21,13 +21,13 @@ export const App = () => {
       return;
     }
 
-    fetchImages(true);
-    });
+    fetchImages();
+    }, [searchQuery, page]);
 
     const fetchImages = async () => {
     setIsLoading(true);
     try {
-      await api.fetchImages(searchQuery, page).then(responce => {
+      api.fetchImages(searchQuery, page).then(responce => {
         const resp = responce.hits.map(({ largeImageURL, tags, webformatURL, id }) => {
           return { largeImageURL, tags, webformatURL, id };
         });

@@ -23,6 +23,6 @@ ImageGallery.propTypes = {
             largeImageURL: PropTypes.string.isRequired,
             webformatURL: PropTypes.string.isRequired,
         })
-    ),
+    ).isRequired,
     toggleModal: PropTypes.func.isRequired,
 };
