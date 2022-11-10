@@ -20,11 +20,7 @@ export const App = () => {
     if (!searchQuery) {
       return;
     }
-
-    fetchImages();
-    }, [searchQuery, page]);
-
-    const fetchImages = async () => {
+       const fetchImages = () => {
     setIsLoading(true);
     try {
       api.fetchImages(searchQuery, page).then(responce => {
@@ -44,6 +40,9 @@ export const App = () => {
     } finally { setIsLoading(false) };
   };
 
+    fetchImages();
+  }, [searchQuery, page]);
+  
     const handleSubmit = searchQuery => {
       setSearchQuery(searchQuery);
       setPage(1);
